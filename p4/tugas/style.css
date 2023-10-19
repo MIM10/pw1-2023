@@ -31,12 +31,12 @@ section h2 {
     margin-bottom: 15px;
 }
 
-section p {
-    margin-bottom: 20px;
+a {
+    color: #fff;
 }
 
 .profil {
-    background-color: #656464;
+    background-color: #333;
     color: #fff;
     padding: 25px 30px;
 }
@@ -55,4 +55,5 @@ footer {
     background-color: #333;
     color: #fff;
     padding: 15px 0;
+    margin-top: 50px;
 }
