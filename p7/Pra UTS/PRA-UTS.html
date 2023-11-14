@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a id="a1" href="#">Data Karyawan</a>
+        <a id="a2" href="#">Master Data</a>
+        <a id="a3" href="#">Tambah Data</a>
+    </header>
+    <main>
+        <section>
+            <h1>FORM ENTRY DATA PEGAWAI</h1>
+            <form action="">
+                <label for="nik">NIK</label>
+                <input type="text" id="nik" name="nik">
+                
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" name="nama">
+
+                <label for="tmptLahir">Tempat Lahir</label>
+                <input type="text" id="tmptLahir" name="tmptLahir">
+
+                <label for="tglLahir">Tanggal Lahir</label>
+                <input type="date" id="tglLahir" name="tglLahir">
+
+                <label for="alamat">Alamat</label>
+                <textarea name="alamat" id="alamat" cols="27" rows="3"></textarea>
+
+                <label for="noTlp">No Telepon</label>
+                <input type="text" id="noTlp" name="noTlp">
+
+                <label for="jabatan">Jabatan</label>
+                <select name="jabatan" id="jabatan">
+                    <option value="">- Jabatan Terbaru -</option>
+                </select>
+
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    <option value="">- Status Terbaru -</option>
+                </select>
+
+                <div></div>
+
+                <div class="btn">
+                    <input type="submit" value="Simpan">
+                    <input type="reset" value="Batal">
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
