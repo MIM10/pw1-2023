@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung luas & keliling lingkaran</title>
+</head>
+<body>
+    <fieldset style="width: fit-content; margin: 0 auto;">
+        <legend>Hitung luas & keliling lingkaran</legend>
+        <form action="">
+            <label for="jari">Masukan jari-jari:</label>
+            <input type="number" name="jari" id="jari" onchange="hitung()" oninput="hitung()">
+        </form>
+        <span id="luas">Luas Lingkaran: </span><br>
+        <span id="keliling">Keliling Lingkaran: </span>
+    </fieldset>
+
+
+    <script>
+        function hitung() {
+            let jarijari =  document.getElementById("jari").value;
+            let luas = Math.PI * jarijari* jarijari;
+            let keliling = 2 * Math.PI * jarijari;
+
+            document.getElementById("luas").innerText = 'Luas Lingkaran: ' + luas.toFixed(2);
+            document.getElementById("keliling").innerText = 'Keliling Lingkaran: ' + keliling.toFixed(2);
+        }
+    </script>
+</body>
+</html>
