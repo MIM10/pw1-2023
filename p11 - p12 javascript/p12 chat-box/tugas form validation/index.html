@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Authentication</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 50px 40px 50px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: -10px;
+            margin-top: 10px;
+        }
+        .name {
+            margin-top: -10px;
+        }
+        input {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #4c5858;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.4s;
+        }
+        button:hover {
+            background-color: #344040;
+        }
+        .result {
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: center;
+            align-content: center;
+            margin-top: 20px;
+            column-gap: 20px;
+        }
+        .result label {
+            text-align: right;
+            margin: 0;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login Form</h2>
+        <form>
+            <label class="name" for="name">Name:</label>
+            <input id="name" type="text" placeholder="Masukkan Nama" maxlength="30" required>
+
+            <label for="email">Email:</label>
+            <input id="email" type="email" placeholder="Masukkan Email" required>
+
+            <label for="departureTime">Departure Time:</label>
+            <input id="departureTime" type="time" step="60" required>
+
+            <label for="number">Number of Tickets:</label>
+            <input id="number" type="number" placeholder="Number of ticket" min="1" max="10" required>
+
+            <button onclick="formValidate()" type="button">Login</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+</body>
+<script>
+    let displayError = (message) =>  {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `<p class="error-message">${message}</p>`;
+    }
+    
+    let displayResult = (name, email, departureTime, number) => {
+        const result = document.getElementById("result");
+        result.innerHTML = `<label>Name&ensp;:</label>
+                            <span>${name}</span>
+                            <label>Email&ensp;:</label>
+                            <span>${email}</span>
+                            <label>Departure Time&ensp;:</label>
+                            <span>${departureTime}</span>
+                            <label>Number of tickets&ensp;:</label>
+                            <span>${number}</span>`
+    }
+
+    const formValidate = () => {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let departureTime = document.getElementById("departureTime").value;
+        let number = document.getElementById("number").value;
+        
+        let isValid = true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Reset error message
+        displayError('');
+
+        // error
+        if (name.trim() === "") {
+            displayError("Name is required.");
+            isValid = false;
+        } else if (name.length > 30) {
+            displayError("Name should be at most 30 characters.");
+            isValid = false;
+        } else if (email.trim() === "") {
+            displayError("Email is required.");
+            isValid = false;
+        } else if (!emailRegex.test(email)) {
+            displayError('Invalid email format.');
+            isValid = false;
+        } else if (departureTime.trim() === "") {
+            displayError("Departure Time is required.");
+            isValid = false;
+        } else if (number.trim() === "") {
+            displayError("Number of tickets is required.");
+            isValid = false;
+        } else if (number < 1 || number > 10) {
+            displayError('Number of tickets should be between 1 and 10.');
+            isValid = false;
+        }
+
+        if (isValid) {
+            displayResult(name, email, departureTime, number);
+        }
+    }
+
+    // onBlur
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const departureTimeInput = document.getElementById("departureTime");
+    const numberInput = document.getElementById("number");
+    
+    nameInput.addEventListener("blur", () => {
+        if (nameInput.value.trim() === "") {
+            setOutlineRed(nameInput);
+        } else {
+            resetOutline(nameInput);
+        }
+    });
+
+    emailInput.addEventListener("blur", () => {
+        if (emailInput.value.trim() === "") {
+            setOutlineRed(emailInput);
+        } else {
+            resetOutline(emailInput);
+        }
+    });
+
+    departureTimeInput.addEventListener("blur", () => {
+        if (departureTimeInput.value.trim() === "") {
+            setOutlineRed(departureTimeInput);
+        } else {
+            resetOutline(departureTimeInput);
+        }
+    });
+
+    numberInput.addEventListener("blur", () => {
+        if (numberInput.value.trim() === "") {
+            setOutlineRed(numberInput);
+        } else {
+            resetOutline(numberInput);
+        }
+    });
+
+    let setOutlineRed = (inputElement) => {
+        inputElement.style.outline = "1px solid red";
+    }
+    
+    let resetOutline = (inputElement) => {
+        inputElement.style.outline = ""; // Reset to default outline
+    }
+</script>
+</html>
