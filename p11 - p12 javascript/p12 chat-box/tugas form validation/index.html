@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tugas Authentication</title>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -33,7 +34,6 @@
         label {
             font-weight: bold;
             margin-bottom: -10px;
-            margin-top: 10px;
         }
         .name {
             margin-top: -10px;
@@ -42,6 +42,9 @@
             padding: 10px 15px;
             border-radius: 6px;
             border: 1px solid #ddd;
+        }
+        input.error {
+            border: 1px solid red;
         }
         button {
             background-color: #4c5858;
@@ -83,8 +86,8 @@
             <label for="email">Email:</label>
             <input id="email" type="email" placeholder="Masukkan Email" required>
 
-            <label for="departureTime">Departure Time:</label>
-            <input id="departureTime" type="time" step="60" required>
+            <label for="time">Departure Time:</label>
+            <input id="time" type="text" placeholder="- - : - -" step="60" required>
 
             <label for="number">Number of Tickets:</label>
             <input id="number" type="number" placeholder="Number of ticket" min="1" max="10" required>
@@ -94,20 +97,37 @@
         <div class="result" id="result"></div>
     </div>
 </body>
+<script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
 <script>
     let displayError = (message) =>  {
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `<p class="error-message">${message}</p>`;
+    
+        // Tambahkan class 'error' ke input yang terpengaruh
+        document.getElementById("name").classList.remove("error");
+        document.getElementById("email").classList.remove("error");
+        document.getElementById("time").classList.remove("error");
+        document.getElementById("number").classList.remove("error");
+    
+        if (message.includes("Name")) {
+            document.getElementById("name").classList.add("error");
+        } else if (message.includes("Email")) {
+            document.getElementById("email").classList.add("error");
+        } else if (message.includes("Departure Time")) {
+            document.getElementById("time").classList.add("error");
+        } else if (message.includes("Number of tickets")) {
+            document.getElementById("number").classList.add("error");
+        }
     }
     
-    let displayResult = (name, email, departureTime, number) => {
+    let displayResult = (name, email, time, number) => {
         const result = document.getElementById("result");
         result.innerHTML = `<label>Name&ensp;:</label>
                             <span>${name}</span>
                             <label>Email&ensp;:</label>
                             <span>${email}</span>
                             <label>Departure Time&ensp;:</label>
-                            <span>${departureTime}</span>
+                            <span>${time}</span>
                             <label>Number of tickets&ensp;:</label>
                             <span>${number}</span>`
     }
@@ -115,7 +135,7 @@
     const formValidate = () => {
         let name = document.getElementById("name").value;
         let email = document.getElementById("email").value;
-        let departureTime = document.getElementById("departureTime").value;
+        let time = document.getElementById("time").value;
         let number = document.getElementById("number").value;
         
         let isValid = true;
@@ -128,35 +148,59 @@
         if (name.trim() === "") {
             displayError("Name is required.");
             isValid = false;
-        } else if (name.length > 30) {
+        }
+        else if (name.length > 30) {
             displayError("Name should be at most 30 characters.");
             isValid = false;
-        } else if (email.trim() === "") {
+        }
+        else if (email.trim() === "") {
             displayError("Email is required.");
             isValid = false;
-        } else if (!emailRegex.test(email)) {
+        }
+        else if (!emailRegex.test(email)) {
             displayError('Invalid email format.');
             isValid = false;
-        } else if (departureTime.trim() === "") {
+        }
+        else if (time.trim() === "") {
             displayError("Departure Time is required.");
             isValid = false;
-        } else if (number.trim() === "") {
+        }
+        else if (number.trim() === "") {
             displayError("Number of tickets is required.");
             isValid = false;
-        } else if (number < 1 || number > 10) {
+        }
+        else if (number < 1 || number > 10) {
             displayError('Number of tickets should be between 1 and 10.');
             isValid = false;
         }
 
         if (isValid) {
-            displayResult(name, email, departureTime, number);
+            displayResult(name, email, time, number);
+        } else {
+            // Reset warna input saat terjadi kesalahan
+            resetOutline(document.getElementById("name"));
+            resetOutline(document.getElementById("email"));
+            resetOutline(document.getElementById("time"));
+            resetOutline(document.getElementById("number"));
         }
     }
+
+    var timepicker = new TimePicker('time', {
+        lang: 'en',
+        theme: 'dark'
+    });
+      
+    var input = document.getElementById('time');
+      
+    timepicker.on('change', function(evt) {
+        var value = (evt.hour || '00') + ':' + (evt.minute || '00');
+        evt.element.value = value;
+    });
 
     // onBlur
     const nameInput = document.getElementById("name");
     const emailInput = document.getElementById("email");
-    const departureTimeInput = document.getElementById("departureTime");
+    const timeInput = document.getElementById("time");
     const numberInput = document.getElementById("number");
     
     nameInput.addEventListener("blur", () => {
@@ -175,11 +219,11 @@
         }
     });
 
-    departureTimeInput.addEventListener("blur", () => {
-        if (departureTimeInput.value.trim() === "") {
-            setOutlineRed(departureTimeInput);
+    timeInput.addEventListener("blur", () => {
+        if (timeInput.value.trim() === "") {
+            setOutlineRed(timeInput);
         } else {
-            resetOutline(departureTimeInput);
+            resetOutline(timeInput);
         }
     });
 
