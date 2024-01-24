@@ -100,7 +100,7 @@
 <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
 <script>
     let displayError = (message) =>  {
-        const resultDiv = document.getElementById('result');
+        const resultDiv = document.getElementById('result');        
         resultDiv.innerHTML = `<p class="error-message">${message}</p>`;
     
         // Tambahkan class 'error' ke input yang terpengaruh
@@ -148,28 +148,22 @@
         if (name.trim() === "") {
             displayError("Name is required.");
             isValid = false;
-        }
-        else if (name.length > 30) {
+        } else if (name.length > 30) {
             displayError("Name should be at most 30 characters.");
             isValid = false;
-        }
-        else if (email.trim() === "") {
+        } else if (email.trim() === "") {
             displayError("Email is required.");
             isValid = false;
-        }
-        else if (!emailRegex.test(email)) {
+        } else if (!emailRegex.test(email)) {
             displayError('Invalid email format.');
             isValid = false;
-        }
-        else if (time.trim() === "") {
+        } else if (time.trim() === "") {
             displayError("Departure Time is required.");
             isValid = false;
-        }
-        else if (number.trim() === "") {
+        } else if (number.trim() === "") {
             displayError("Number of tickets is required.");
             isValid = false;
-        }
-        else if (number < 1 || number > 10) {
+        } else if (number < 1 || number > 10) {
             displayError('Number of tickets should be between 1 and 10.');
             isValid = false;
         }
@@ -178,10 +172,10 @@
             displayResult(name, email, time, number);
         } else {
             // Reset warna input saat terjadi kesalahan
-            resetOutline(document.getElementById("name"));
-            resetOutline(document.getElementById("email"));
-            resetOutline(document.getElementById("time"));
-            resetOutline(document.getElementById("number"));
+            document.getElementById("name").classList.add("error");
+            document.getElementById("email").classList.add("error");
+            document.getElementById("time").classList.add("error");
+            document.getElementById("number").classList.add("error");
         }
     }
 
